@@ -22,6 +22,8 @@ The application consists of a server and a client. The server listens for incomi
   - [Features](#features)
 - [Modes: Server and Client](#modes-server-and-client)
   - [Executing the Code](#executing-the-code)
+  - [Example Usage](#example-usage)
+    - [**Machine1** (`server`) and **Machine2** (`client`) communcation](#machine1-server-and-machine2-client-communcation)
   - [Notes](#notes)
   - [License](#license)
   - [Contributing](#contributing)
@@ -70,7 +72,55 @@ cargo run -- client 127.0.0.1:8080
 
 Note: Replace `127.0.0.1:8080` with the server's IP and port.
 
-Enter messages in the terminal to send them to the server. Type exit to close the client.
+Enter messages in the terminal to send them to the `server`. Type exit to close the client.
+
+## Example Usage
+
+To chat across two separate machines on the same wifi network, follow the below instructions. 
+
+### **Machine1** (`server`) and **Machine2** (`client`) communcation
+
+Imagine that there are two machines involved,
+  + **Machine1** (`server`, IP: `192.168.40.69`)
+  + **Machine2** (`client`, IP: `192.168.40.121`)
+  
+Notice that the IP addresses are different! The `server` will be running on **Machine1**, and the `client` will be running on **Machine2**.
+
+In order to have the machines communicate, the `client` onf**Machine1** must be using the IP address of the `server` of **Machine2** who is listening.
+
+1. On **Machine1** (`Server`):
+   - Open a terminal and run the server:
+
+     ```bash
+     cargo run -- server 192.168.40.69:8080
+     ```
+
+This creates a server that listens on IP address `192.168.40.69` and port `8080`. The server will wait for incoming connections and display received messages.
+
+2. **On Machine2 (Client)**:
+   - Open a terminal and run the client using the IP address of the server:
+     ```bash
+     cargo run client 192.168.40.69:8080
+     ```
+
+This connects the `client` to the `server` at IP address. You can now start sending messages from the `client` (Machine2) to the `server` (Machine1). when you are finished on the `client`, type `exit` to close the connection.
+
+In order for **Machine2** to send messages back to **Machine1**, the `client` must be using the IP address of the `server` of **Machine1** who is listening.
+
+1. On **Machine2** (`Server`):
+   - Open a terminal and run the server:
+
+     ```bash
+     cargo run -- server 192.168.40.121:8080
+     ```
+
+This creates a server that listens on IP address `192.168.40.69` and port `8080`. The server will wait for incoming connections and display received messages.
+
+2. **On Machine1 (Client)**:
+   - Open a terminal and run the client using the IP address of the server:
+     ```bash
+     cargo run client 192.168.40.121:8080
+     ```
 
 ## Notes
 
