@@ -24,6 +24,7 @@ The application consists of a server and a client. The server listens for incomi
   - [Executing the Code](#executing-the-code)
   - [Example Usage](#example-usage)
     - [**Machine1** (`server`) and **Machine2** (`client`) communcation](#machine1-server-and-machine2-client-communcation)
+    - [**Machine2** (`server`) and **Machine1** (`client`) communcation](#machine2-server-and-machine1-client-communcation)
   - [Notes](#notes)
   - [License](#license)
   - [Contributing](#contributing)
@@ -104,6 +105,8 @@ This creates a server that listens on IP address `192.168.40.69` and port `8080`
      ```
 
 This connects the `client` to the `server` at IP address. You can now start sending messages from the `client` (Machine2) to the `server` (Machine1). when you are finished on the `client`, type `exit` to close the connection.
+
+### **Machine2** (`server`) and **Machine1** (`client`) communcation
 
 In order for **Machine2** to send messages back to **Machine1**, the `client` must be using the IP address of the `server` of **Machine1** who is listening.
 
