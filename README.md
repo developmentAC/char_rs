@@ -25,7 +25,7 @@ The application consists of a server and a client. The server listens for incomi
   - [Notes](#notes)
   - [License](#license)
   - [Contributing](#contributing)
-    - [A Work In Progress](#a-work-in-progress)
+  - [A Work In Progress](#a-work-in-progress)
 
 # IP-to-IP Chat Application
 
@@ -86,7 +86,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 Contributions are welcome! If you have ideas for improvements or want to add more features, feel free to open an issue or submit a pull request.
 
-### A Work In Progress
+## A Work In Progress
 
 Check back often to see the evolution of the project! **Chat-RS** is a work-in-progress. Updates will come periodically.
 
