@@ -152,10 +152,19 @@ fn main() {
     let args: Vec<String> = env::args().collect(); // Collect command-line arguments
 
     if args.len() < 3 {
-        eprintln!("\t Usage: {} <mode> <address>", args[0]); // Print usage instructions
         eprintln!("\t Modes: server, client");
+        eprintln!("\t Usage: {} <mode> <address>", args[0]); // Print usage instructions
         if let Some(ip) = get_local_ip() {
             println!("\t Your local IP address is: {}", ip); // Display the local IP address
+            colour_print("\n\t Sample commands to run the server and client:","cyan");
+            let msg = format!("\t  {} server {ip}:8080",args[0]);
+            colour_print(&msg, "green"); // Print the server command in green
+
+            let msg = format!("\t  {} client {ip}:8080",args[0]);
+            colour_print(&msg, "green"); // Print the server command in green
+
+            // println!("\t Server command: {} server {ip}:8080",args[0]); // Provide an example usage
+            // println!("\t Client command: {} client {ip}:8080",args[0]); // Provide an example usage
         } else {
             println!("\t Could not determine your local IP address. :-("); // Handle failure to determine IP
         }
