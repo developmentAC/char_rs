@@ -1,9 +1,9 @@
 // Import necessary modules for command-line arguments, networking, threading, and input/output
 use std::env;
-use std::io::{self, Write};
-use std::net::{TcpListener, TcpStream, IpAddr, UdpSocket};
-use std::thread;
 use std::io::Read;
+use std::io::{self, Write};
+use std::net::{IpAddr, TcpListener, TcpStream, UdpSocket};
+use std::thread;
 
 // Function to determine the local IP address of the machine
 // This is useful for users to identify their IP address when setting up the server
@@ -66,13 +66,18 @@ fn start_client(address: &str) {
         input.clear(); // Clear the input buffer
         stdin.read_line(&mut input).unwrap(); // Read user input
 
-        if input.trim() == "exit" { // Exit the loop if the user types "exit"
-        // stream.write_all(input.as_bytes()).expect("Failed to send message :-("); // Send the message to the server
-        stream.write_all("Your correspondent has exited the connection ...".as_bytes()).expect("Failed to send message :-("); // Send the message to the server
+        if input.trim() == "exit" {
+            // Exit the loop if the user types "exit"
+            // stream.write_all(input.as_bytes()).expect("Failed to send message :-("); // Send the message to the server
+            stream
+                .write_all("Your correspondent has exited the connection ...".as_bytes())
+                .expect("Failed to send message :-("); // Send the message to the server
             break;
         }
 
-        stream.write_all(input.as_bytes()).expect("Failed to send message :-("); // Send the message to the server
+        stream
+            .write_all(input.as_bytes())
+            .expect("Failed to send message :-("); // Send the message to the server
     }
 }
 

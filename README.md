@@ -21,8 +21,7 @@ The application consists of a server and a client. The server listens for incomi
 - [IP-to-IP Chat Application](#ip-to-ip-chat-application)
   - [Features](#features)
 - [Modes: Server and Client](#modes-server-and-client)
-  - [Server Mode](#server-mode)
-  - [Client Mode](#client-mode)
+  - [Executing the Code](#executing-the-code)
   - [Notes](#notes)
   - [License](#license)
   - [Contributing](#contributing)
@@ -43,16 +42,16 @@ The application was written in Rust has two modes: server and client. Use the fo
 
 # Modes: Server and Client
 
-In networking, a `server` is a program that provides the services that are requested by a `client` that initiates the requests. Here, the `server` listens for incoming connections from `clients`. The `server` is responsible for accepting connections and handling incoming messages.
+In networking, a `server` is a program that provides the services that are requested by a `client` that initiates the requests. Here, the `server` listens for incoming connections from `clients`. The `server` is also responsible for accepting connections and handling incoming messages.
 
-The `server` uses the `TcpListener` crate to listen for incoming connections on a specified IP address and port. When a `client` connects, the server accepts the connection and starts a new thread to handle communication with that client. The `server` uses the `TcpStream` to send and receive its messages over the network.
+The `server` uses the `TcpListener` crate to listen for incoming connections on a specified IP address and port. When a `client` connects, the `server` accepts the connection and starts a new thread to handle communication with that `client`. The `server` uses the `TcpStream` to send and receive its messages over the network.
 
-While the chat-space may appear jumbled in this project due multiple clients talking at the same time, the `server` can actually handle several `clients` at the same time by spawning new threads for each connection. Each of the thread listens individually for incoming messages from the `client` and then prints them to the console.
+While the chat-space may appear jumbled in this project due multiple `clients` talking at the same time, the `server` can actually handle several `clients` at the same time by spawning new threads for each connection. Each of the thread listens individually for incoming messages from the `client` and then prints them to the console.
 
-## Server Mode
+## Executing the Code
 
 **First step: open the server**
-Start the server by specifying the mode as server and the IP address with a port to listen on:
+Start the server by specifying the mode as `server` and specifying the IP address with a port to use to listen for incoming connections.
 
 ``` bash
 cargo run -- server 127.0.0.1:8080
@@ -60,9 +59,7 @@ cargo run -- server 127.0.0.1:8080
 
 Note: Replace `127.0.0.1:8080` with the desired IP and port.
 
-The server will wait for incoming connections and display received messages.
-
-## Client Mode
+The server will wait for incoming connections and display received messages. (Seems a little sad to me that the server just sits around waiting for whatever it finds, but I guess it is a server after all!)
 
 **Second step: open the client**
 Start the client by specifying the mode as client and the server's IP address with the port:
