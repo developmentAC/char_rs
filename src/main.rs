@@ -78,11 +78,8 @@ fn handle_client(mut stream: TcpStream) {
             Ok(_) => {
                 let message = String::from_utf8_lossy(&buffer); // Convert bytes to a string
                 // println!("  Received: {}", message); // Print the received message
-                let msg = format!("\t Received: {message}" );
+                let msg = format!("\t Received: {message}");
                 colour_print(&msg, "yellow");
-            
-
-
             }
             Err(e) => {
                 eprintln!("Failed to read from socket: {}", e); // Handle read errors
@@ -98,7 +95,7 @@ fn start_server(address: &str) {
     let listener = TcpListener::bind(address).expect("Could not bind :-("); // Bind to the specified address
 
     // println!("\t Server listening on {}", address);
-    let msg = format!("\t Server listening on {address}" );
+    let msg = format!("\t Server listening on {address}");
     colour_print(&msg, "green"); // print in green
 
     for stream in listener.incoming() {
@@ -156,15 +153,15 @@ fn main() {
         eprintln!("\t Usage: {} <mode> <address>", args[0]); // Print usage instructions
         if let Some(ip) = get_local_ip() {
             println!("\t Your local IP address is: {}", ip); // Display the local IP address
-            colour_print("\n\t Sample commands to run the server and client:","cyan");
-            let msg = format!("\t   {} server {ip}:8080",args[0]);
+            colour_print("\n\t Sample commands to run the server and client:", "cyan");
+            let msg = format!("\t   {} server {ip}:8080", args[0]);
             colour_print(&msg, "green"); // Print the server command in green
 
-            let msg = format!("\t   {} client {ip}:8080",args[0]);
+            let msg = format!("\t   {} client {ip}:8080", args[0]);
             colour_print(&msg, "green"); // Print the server command in green
 
-            // println!("\t Server command: {} server {ip}:8080",args[0]); // Provide an example usage
-            // println!("\t Client command: {} client {ip}:8080",args[0]); // Provide an example usage
+        // println!("\t Server command: {} server {ip}:8080",args[0]); // Provide an example usage
+        // println!("\t Client command: {} client {ip}:8080",args[0]); // Provide an example usage
         } else {
             println!("\t Could not determine your local IP address. :-("); // Handle failure to determine IP
         }
