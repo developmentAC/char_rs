@@ -77,7 +77,12 @@ fn handle_client(mut stream: TcpStream) {
             Ok(0) => break, // Connection closed by the client
             Ok(_) => {
                 let message = String::from_utf8_lossy(&buffer); // Convert bytes to a string
-                println!("  Received: {}", message); // Print the received message
+                // println!("  Received: {}", message); // Print the received message
+                let msg = format!("\t Received: {message}" );
+                colour_print(&msg, "yellow");
+            
+
+
             }
             Err(e) => {
                 eprintln!("Failed to read from socket: {}", e); // Handle read errors
@@ -91,12 +96,15 @@ fn handle_client(mut stream: TcpStream) {
 // The server listens for incoming connections and spawns a new thread for each client
 fn start_server(address: &str) {
     let listener = TcpListener::bind(address).expect("Could not bind :-("); // Bind to the specified address
-    println!("\t Server listening on {}", address);
+
+    // println!("\t Server listening on {}", address);
+    let msg = format!("\t Server listening on {address}" );
+    colour_print(&msg, "green"); // print in green
 
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
-                println!("New connection: {}", stream.peer_addr().unwrap()); // Log the new connection
+                println!("\t New connection: {}", stream.peer_addr().unwrap()); // Log the new connection
                 thread::spawn(|| handle_client(stream)); // Handle the client in a new thread
             }
             Err(e) => {
@@ -109,7 +117,7 @@ fn start_server(address: &str) {
 // Function to start the client
 // The client connects to the server and allows the user to send messages
 fn start_client(address: &str) {
-    let mut stream = TcpStream::connect(address).expect("  Could not connect to server :-("); // Connect to the server
+    let mut stream = TcpStream::connect(address).expect("  Could not connect to server"); // Connect to the server
     println!("\t Connected to server at {}", address);
 
     let stdin = io::stdin(); // Standard input for user input
