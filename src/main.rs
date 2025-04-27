@@ -157,10 +157,10 @@ fn main() {
         if let Some(ip) = get_local_ip() {
             println!("\t Your local IP address is: {}", ip); // Display the local IP address
             colour_print("\n\t Sample commands to run the server and client:","cyan");
-            let msg = format!("\t  {} server {ip}:8080",args[0]);
+            let msg = format!("\t   {} server {ip}:8080",args[0]);
             colour_print(&msg, "green"); // Print the server command in green
 
-            let msg = format!("\t  {} client {ip}:8080",args[0]);
+            let msg = format!("\t   {} client {ip}:8080",args[0]);
             colour_print(&msg, "green"); // Print the server command in green
 
             // println!("\t Server command: {} server {ip}:8080",args[0]); // Provide an example usage
