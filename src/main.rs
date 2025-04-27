@@ -1,9 +1,64 @@
 // Import necessary modules for command-line arguments, networking, threading, and input/output
+use colored::Colorize;
 use std::env;
 use std::io::Read;
 use std::io::{self, Write};
 use std::net::{IpAddr, TcpListener, TcpStream, UdpSocket};
 use std::thread;
+
+mod toml_extract; // Extract and print the version information according to the toml file
+
+// Print colored text to the console
+fn colour_print(text: &str, colour: &str) {
+    match colour {
+        "flush_green" => {
+            print!("\x1b[2K\r"); // Clear the line and move to the beginning
+            io::stdout().flush().unwrap();
+            print!(" {}", text.bright_green().bold());
+            io::stdout().flush().unwrap();
+        }
+        "green" => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_green().bold());
+        }
+        "green_noLineFeed" => {
+            print!("\x1b[2K\r");
+            print!("{}", text.bright_green().bold());
+        }
+        "red" => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_red().bold());
+        }
+        "cyan" => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_cyan().bold());
+        }
+        "purple" => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_purple().bold());
+        }
+        "purple_noLineFeed" => {
+            print!("\x1b[2K\r");
+            print!("{}", text.bright_purple().bold());
+        }
+        "blue" => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_blue().bold());
+        }
+        "yellow" => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_yellow().bold());
+        }
+        "yellow_noLineFeed" => {
+            print!("\x1b[2K\r");
+            print!("{}", text.bright_yellow().bold());
+        }
+        _ => {
+            print!("\x1b[2K\r");
+            println!("{}", text.bright_yellow().bold());
+        }
+    }
+}
 
 // Function to determine the local IP address of the machine
 // This is useful for users to identify their IP address when setting up the server
@@ -22,7 +77,7 @@ fn handle_client(mut stream: TcpStream) {
             Ok(0) => break, // Connection closed by the client
             Ok(_) => {
                 let message = String::from_utf8_lossy(&buffer); // Convert bytes to a string
-                println!("Received: {}", message); // Print the received message
+                println!("  Received: {}", message); // Print the received message
             }
             Err(e) => {
                 eprintln!("Failed to read from socket: {}", e); // Handle read errors
@@ -36,7 +91,7 @@ fn handle_client(mut stream: TcpStream) {
 // The server listens for incoming connections and spawns a new thread for each client
 fn start_server(address: &str) {
     let listener = TcpListener::bind(address).expect("Could not bind :-("); // Bind to the specified address
-    println!("Server listening on {}", address);
+    println!("\t Server listening on {}", address);
 
     for stream in listener.incoming() {
         match stream {
@@ -54,14 +109,14 @@ fn start_server(address: &str) {
 // Function to start the client
 // The client connects to the server and allows the user to send messages
 fn start_client(address: &str) {
-    let mut stream = TcpStream::connect(address).expect("Could not connect to server :-("); // Connect to the server
-    println!("Connected to server at {}", address);
+    let mut stream = TcpStream::connect(address).expect("  Could not connect to server :-("); // Connect to the server
+    println!("\t Connected to server at {}", address);
 
     let stdin = io::stdin(); // Standard input for user input
     let mut input = String::new(); // Buffer to store user input
 
     loop {
-        print!("Enter a message: "); // Prompt the user for input
+        print!("\t Enter a message: "); // Prompt the user for input
         io::stdout().flush().unwrap(); // Ensure the prompt is displayed immediately
         input.clear(); // Clear the input buffer
         stdin.read_line(&mut input).unwrap(); // Read user input
@@ -83,15 +138,18 @@ fn start_client(address: &str) {
 
 // Main function to parse command-line arguments and start the appropriate mode
 fn main() {
+    // Display version information from the toml file
+    toml_extract::main();
+
     let args: Vec<String> = env::args().collect(); // Collect command-line arguments
 
     if args.len() < 3 {
-        eprintln!("Usage: {} <mode> <address>", args[0]); // Print usage instructions
-        eprintln!("Modes: server, client");
+        eprintln!("\t Usage: {} <mode> <address>", args[0]); // Print usage instructions
+        eprintln!("\t Modes: server, client");
         if let Some(ip) = get_local_ip() {
-            println!("Your local IP address is: {}", ip); // Display the local IP address
+            println!("\t Your local IP address is: {}", ip); // Display the local IP address
         } else {
-            println!("Could not determine your local IP address. :-("); // Handle failure to determine IP
+            println!("\t Could not determine your local IP address. :-("); // Handle failure to determine IP
         }
         return;
     }
@@ -102,6 +160,6 @@ fn main() {
     match mode.as_str() {
         "server" => start_server(my_address), // Start the server if mode is "server"
         "client" => start_client(my_address), // Start the client if mode is "client"
-        _ => eprintln!("Invalid mode. Use 'server' or 'client'."), // Handle invalid mode
+        _ => eprintln!("  Invalid mode. Use 'server' or 'client'."), // Handle invalid mode
     }
 }
